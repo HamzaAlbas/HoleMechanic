@@ -10,13 +10,19 @@ public class LayerSwitcher : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        other.gameObject.layer = LayerMask.NameToLayer(enterLayer);
-        other.gameObject.GetComponent<Rigidbody>().sleepThreshold = 0;
+        if (other.CompareTag("Cubes"))
+        {
+            other.gameObject.layer = LayerMask.NameToLayer(enterLayer);
+            other.gameObject.GetComponent<Rigidbody>().sleepThreshold = 0;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        other.gameObject.layer = LayerMask.NameToLayer(exitLayer); 
-        other.gameObject.GetComponent<Rigidbody>().sleepThreshold = 0.005f;
+        if (other.CompareTag("Cubes"))
+        {
+            other.gameObject.layer = LayerMask.NameToLayer(exitLayer);
+            other.gameObject.GetComponent<Rigidbody>().sleepThreshold = 0.005f;
+        }
     }
 }
