@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class HoleManager : MonoBehaviour, IObserver
 {
+    public List<AudioClip> gulpSounds = new List<AudioClip>();
     [SerializeField] Subject cubeCheckSubject;
+    private AudioSource audioSource;
 
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public void OnNotify()
     {
-        Debug.Log("A cube has eaten");
+        Eat();
     }
 
     private void OnEnable()
@@ -20,5 +26,12 @@ public class HoleManager : MonoBehaviour, IObserver
     private void OnDisable()
     {
         cubeCheckSubject.RemoveObserver(this);
+    }
+
+    private void Eat()
+    {
+        transform.localScale += new Vector3(0.05f, 0, 0.05f);
+        var randomIndex = Random.Range(0, gulpSounds.Count);
+        audioSource.PlayOneShot(gulpSounds[randomIndex]);
     }
 }
